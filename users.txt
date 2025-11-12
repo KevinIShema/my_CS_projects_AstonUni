@@ -1,3 +1,2 @@
-alice:apassword
-peter:ppassword
-john:jpassword
+kevin:1223
+
