@@ -41,34 +41,77 @@
 
 
 
-import unittest
+# import unittest
+# import mysql.connector
+
+# def connect_db():
+#     return mysql.connector.connect(
+#         host="localhost",
+#         user="root",
+#         password="Amadestiny@1",
+#         database="food_delivery",
+#         port=3306
+#     )
+
+# def view_menu():
+#     connection = connect_db()
+#     cursor = connection.cursor()
+#     cursor.execute("SELECT * FROM menu_items;")
+#     items = cursor.fetchall()
+#     print("\n🍔 Available Menu Items:")
+#     print("-" * 35)
+#     for item in items:
+#         print(f"{item[0]}. {item[1]} - ${item[2]:.2f}")
+#     print("-" * 35)
+#     cursor.close()
+#     connection.close()
+#     return items
+
+# class TestMenuOperations(unittest.TestCase):
+#     def test_view_menu(self):
+#         items = view_menu()
+#         self.assertIsNotNone(items)
+#         self.assertIsInstance(items, list)
+
+
+
+# import mysql.connector
+
+# connection = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     password="",
+#     database="food_delivery",
+#     port=3306
+# )
+# cursor = connection.cursor()
+# cursor.execute("SELECT * FROM menu_items;")
+# rows = cursor.fetchall()
+# for r in rows:
+#     print(r)
+
+# cursor.close()
+# connection.close()
+
+
 import mysql.connector
 
-def connect_db():
-    return mysql.connector.connect(
+try:
+    connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="Amadestiny@1",
-        database="food_delivery",
-        port=3306
+        password="",
+        database="food_delivery"
     )
-
-def view_menu():
-    connection = connect_db()
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM menu_items;")
-    items = cursor.fetchall()
-    print("\n🍔 Available Menu Items:")
-    print("-" * 35)
-    for item in items:
-        print(f"{item[0]}. {item[1]} - ${item[2]:.2f}")
-    print("-" * 35)
-    cursor.close()
-    connection.close()
-    return items
-
-class TestMenuOperations(unittest.TestCase):
-    def test_view_menu(self):
-        items = view_menu()
-        self.assertIsNotNone(items)
-        self.assertIsInstance(items, list)
+    cursor.execute("SELECT item_id, item_name, price FROM menu_items;")
+    rows = cursor.fetchall()
+    print("✅ Connection and query successful! Menu items:")
+    for r in rows:
+        print(r)
+except mysql.connector.Error as e:
+    print("❌ Error:", e)
+finally:
+    if connection.is_connected():
+        cursor.close()
+        connection.close()

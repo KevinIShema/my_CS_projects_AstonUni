@@ -1,0 +1,3 @@
+alice:apassword
+peter:ppassword
+john:jpassword
